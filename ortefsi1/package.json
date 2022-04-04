@@ -1,0 +1,18 @@
+{
+  "name": "desarrollo",
+  "version": "1.0.0",
+  "description": "mi primer proyecto",
+  "main": "mi primer proyecto.js",
+  "scripts": {
+    "test": "echo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/UrielRozic/ortefsi1.git)"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
