@@ -4,4 +4,4 @@ function sort2(a,b) {return b - a;}
 
 const results = data.filter( x => x%2 !== 0).sort(sort2);
 
-console.log(results[i])
+console.log(results[i]);
