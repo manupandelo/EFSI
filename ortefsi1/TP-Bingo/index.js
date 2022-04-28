@@ -18,7 +18,10 @@ Se sacan números con *sacar_numero* hasta que el sistema detecta qué cartón o
 const express = require("express");
 const app = express();
 const PORT = 3000;
-const carton=[];
+let JugadorCarton=[];
+let numeros=[];
+let contadorJugadores=0;
+let contadorCartones;
 
 const process_data = () => {
 
@@ -37,17 +40,25 @@ function NumRandom(max){
 
 function NumsCarton(){
     const nums=[];
+    let num;
     for(let i=0;i<10;i++){
-       let num=NumRandom(50);
+       num=NumRandom(99);
        for(let n=0;n<nums.length;n++){
-           if(num==nums[n]);
-           num=NumRandom(50);
+           while(num===nums[n]);
+           num=NumRandom(99);
        }
-       nums.push(num);
+       nums[i]=num;
     }
     return nums;
 }
-	
+
+function AsignarNombre(nombre){
+    for(let i=0;i<carton.length;i++){
+        if(carton[i].nombre==null){
+            carton[i].nombre=nombre    
+        }
+    }
+}
 app.post("/numero_aleatorio", function (req, res) {
 	
     console.log(res);
@@ -58,26 +69,45 @@ app.post("/numero_aleatorio", function (req, res) {
 app.post("/iniciar_juego", function (req, res) {
 	
     for(let i=0;i<req.body.cartones;i++){
-        
-        carton.push({
-            numeros: NumsCarton(),
-            nombre: i
-        });
+        for(let i=0;i<req.body.cartones;i++){
+            nums = NumsCarton();
+            numeros.push(carton);
+        }
+        res.send(numeros);
     }
 	// res.end();
 });
 
-app.get("/cartones/:nombre?", function (req, res) {
-    var nombre=req.params.nombre;
-    
-    res.send("respuesta");
+app.get("/onterner_carton", function (req, res) {
+    Numeros=AsignarNombre(req.params.nombre);
+    let jugador={
+        Nombre:req.body.nombre,
+        NumsCarton:numeros[contadorJugadores]
+    }
+    JugadorCarton.push(jugador);
+    res.send(`Jugador ${jugador.Nombre}: ${jugador.NumsCarton}`);      
 });
 
-app.get("/cartones", function (req, res) {
-    res.send(carton);
+app.get("/cartones/:nombre?", function (req, res) {
+    const nombre=req.params.nombre
+    let cartomBuscado
+    if(nombre===undefined){
+        res.send(carton);
+    }
+    else{
+        for(let i=0;i<JugadorCarton.length;i++){
+            if(JugadorCarton.Nombre===nombre){
+                cartonBuscado=JugadorCarton.NumsCarton
+            }
+        }
+        res.send(cartonBuscado)
+    }
+
 });
 
 app.get("/sacar_numero", function (req, res) {
+    
+    
     res.send("respuesta");
 });
 
