@@ -18,10 +18,10 @@ Se sacan números con *sacar_numero* hasta que el sistema detecta qué cartón o
 const express = require("express");
 const app = express();
 const PORT = 3000;
-let JugadorCarton=[];
-let numeros=[];
-let contadorJugadores=0;
-let contadorCartones;
+let nombres=[];
+let cartones=[];
+let vectorBolillas=[];
+const CANT_NUMEROS=5;
 
 const process_data = () => {
 
@@ -38,10 +38,10 @@ function NumRandom(max){
     return Math.floor(Math.random() * max-1) + 1;
 }
 
-function NumsCarton(){
+const CrearCarton=()=>{
     const nums=[];
     let num;
-    for(let i=0;i<10;i++){
+    for(let i=0;i<CANT_NUMEROS;i++){
        num=NumRandom(99);
        for(let n=0;n<nums.length;n++){
            while(num===nums[n]);
@@ -52,13 +52,7 @@ function NumsCarton(){
     return nums;
 }
 
-function AsignarNombre(nombre){
-    for(let i=0;i<carton.length;i++){
-        if(carton[i].nombre==null){
-            carton[i].nombre=nombre    
-        }
-    }
-}
+
 app.post("/numero_aleatorio", function (req, res) {
 	
     console.log(res);
@@ -70,45 +64,95 @@ app.post("/iniciar_juego", function (req, res) {
 	
     for(let i=0;i<req.body.cartones;i++){
         for(let i=0;i<req.body.cartones;i++){
-            nums = NumsCarton();
-            numeros.push(carton);
+            cartones.push(CrearCarton());
         }
-        res.send(numeros);
+        res.send(cartones);
     }
 	// res.end();
 });
 
-app.get("/onterner_carton", function (req, res) {
-    Numeros=AsignarNombre(req.params.nombre);
-    let jugador={
-        Nombre:req.body.nombre,
-        NumsCarton:numeros[contadorJugadores]
+app.get("/obtener_carton", function (req, res) {
+    if(nombres.length>=cartones.length){
+       res.send(`Error, mas jugadores que cartones`);
     }
-    JugadorCarton.push(jugador);
-    res.send(`Jugador ${jugador.Nombre}: ${jugador.NumsCarton}`);      
+    else{
+    const nombre = req.params.nombre;
+    nombres.push(nombre);
+    console.log(nombres);
+    i = nombres.length ;
+    
+    res.send(`al jugador "${nombre}" se le fue asignado el carton consistente de los numeros: ${cartones[i]}`);
+    }
 });
 
 app.get("/cartones/:nombre?", function (req, res) {
-    const nombre=req.params.nombre
-    let cartomBuscado
+    const nombre=req.params.nombre;
+    let cartonBuscado;
     if(nombre===undefined){
-        res.send(carton);
+        res.send(cartones);
     }
     else{
         for(let i=0;i<JugadorCarton.length;i++){
             if(JugadorCarton.Nombre===nombre){
-                cartonBuscado=JugadorCarton.NumsCarton
+                cartonBuscado=JugadorCarton.NumsCarton;
             }
         }
-        res.send(cartonBuscado)
+        res.send(cartonBuscado);
     }
 
 });
 
-app.get("/sacar_numero", function (req, res) {
+const validarLleno = (cartones) => {
+    for (let i=0; i<cartones.length; i++) {
+        let carton = cartones[index]
+        let contador=0;
+        for (let j = 0; j < carton.length; j++) {
+            if(carton[j]==-1){
+                contador = contador +1;
+            }
+            if(contador==CANT_NUMEROS){
+                return i;
+            }
+        }
+        
+    }
+    return -1;
+}
+
+const sacarBolilla = (vectorBolillas) => {
+    let pelota = NumRandom(99);
+
+    while (vecPelotas[pelota] >= 1)
+    {
+        pelota = NumRandom(99);
+    }
+    vecPelotas[pelota] = vecPelotas[pelota] + 1;
+    return pelota;
+}
+
+app.get('/sacarnumero', function (req, res) {
+    VectBolilla = CrearVector();
+    while (validarLleno(cartones)==-1) {
+        Bolilla = sacarBolilla(VectBolilla);
+        console.log(`Se saco la bolilla: ${Bolilla}`);
+        for (let i= 0; i<cartones.length; i++) {
+            carton=cartones[i]
+            for (let j=0; j < 10; j++) {
+                if (carton[j] === Bolilla) {
+                    console.log(`Carton de ${nombres[i]} tenia el ${Bolilla}`);
+                    carton[j] = -1;
+                }
+            }
+            console.log(carton);
+        }
+    }
+    if(validarLleno(cartones)>nombres.length){
+        res.send("El carton ganador quedo vacante");
+    }
+    else{
+        res.send(`El carton ganador es el de ${nombres[i]}`);
+    }
     
-    
-    res.send("respuesta");
 });
 
 app.listen(PORT, function(err){
