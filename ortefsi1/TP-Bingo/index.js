@@ -69,14 +69,15 @@ app.post("/iniciarjuego", function (req, res) {
 	// res.end();
 });
 
-app.get("/obtener_carton", function (req, res) {
+app.get("/obtener_carton/:nombre", function (req, res) {
     if(nombres.length>=cartones.length){
        res.send(`Error, mas jugadores que cartones`);
     }
     else{
-    nombres.push(req.body.nombres);
+    const nombre=req.params.nombre;
+    nombres.push(nombre);
     console.log(nombres);
-    i = nombres.length ;
+    i = nombres.length;
     
     res.send(`al jugador "${nombre}" se le fue asignado el carton consistente de los numeros: ${cartones[i-1]}`);
     }
@@ -89,9 +90,9 @@ app.get("/cartones/:nombre?", function (req, res) {
         res.send(cartones);
     }
     else{
-        for(let i=0;i<JugadorCarton.length;i++){
-            if(JugadorCarton.Nombre===nombre){
-                cartonBuscado=JugadorCarton.NumsCarton;
+        for(let i=0;i<nombres.length;i++){
+            if(nombres[i]===nombre){
+                cartonBuscado=cartones[i];
             }
         }
         res.send(cartonBuscado);
@@ -101,7 +102,7 @@ app.get("/cartones/:nombre?", function (req, res) {
 
 const Bingo = (cartones) => {
     for (let i=0; i<cartones.length; i++) {
-        let carton = cartones[index]
+        let carton = cartones[i]
         let contador=0;
         for (let j = 0; j < carton.length; j++) {
             if(carton[j]==-1){
