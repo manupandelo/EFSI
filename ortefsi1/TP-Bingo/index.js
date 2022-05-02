@@ -20,7 +20,6 @@ const app = express();
 const PORT = 3000;
 let nombres=[];
 let cartones=[];
-let vectorBolillas=[];
 const CANT_NUMEROS=5;
 
 const process_data = () => {
@@ -35,7 +34,7 @@ const process_data = () => {
 app.use(express.json());
  
 function NumRandom(max){
-    return Math.floor(Math.random() * max-1) + 1;
+    return Math.round(Math.random() * max-1) + 1;
 }
 
 const CrearCarton=()=>{
@@ -60,14 +59,13 @@ app.post("/numero_aleatorio", function (req, res) {
 	// res.end();
 });
 
-app.post("/iniciar_juego", function (req, res) {
+app.post("/iniciarjuego", function (req, res) {
 	
     for(let i=0;i<req.body.cartones;i++){
-        for(let i=0;i<req.body.cartones;i++){
-            cartones.push(CrearCarton());
+            let carton=CrearCarton();
+            cartones.push(carton);
         }
         res.send(cartones);
-    }
 	// res.end();
 });
 
@@ -76,12 +74,11 @@ app.get("/obtener_carton", function (req, res) {
        res.send(`Error, mas jugadores que cartones`);
     }
     else{
-    const nombre = req.params.nombre;
-    nombres.push(nombre);
+    nombres.push(req.body.nombres);
     console.log(nombres);
     i = nombres.length ;
     
-    res.send(`al jugador "${nombre}" se le fue asignado el carton consistente de los numeros: ${cartones[i]}`);
+    res.send(`al jugador "${nombre}" se le fue asignado el carton consistente de los numeros: ${cartones[i-1]}`);
     }
 });
 
@@ -102,7 +99,7 @@ app.get("/cartones/:nombre?", function (req, res) {
 
 });
 
-const validarLleno = (cartones) => {
+const Bingo = (cartones) => {
     for (let i=0; i<cartones.length; i++) {
         let carton = cartones[index]
         let contador=0;
@@ -119,21 +116,11 @@ const validarLleno = (cartones) => {
     return -1;
 }
 
-const sacarBolilla = (vectorBolillas) => {
-    let pelota = NumRandom(99);
 
-    while (vecPelotas[pelota] >= 1)
-    {
-        pelota = NumRandom(99);
-    }
-    vecPelotas[pelota] = vecPelotas[pelota] + 1;
-    return pelota;
-}
 
 app.get('/sacarnumero', function (req, res) {
-    VectBolilla = CrearVector();
-    while (validarLleno(cartones)==-1) {
-        Bolilla = sacarBolilla(VectBolilla);
+    while (Bingo(cartones)==-1) {
+        Bolilla = NumRandom(99);
         console.log(`Se saco la bolilla: ${Bolilla}`);
         for (let i= 0; i<cartones.length; i++) {
             carton=cartones[i]
@@ -146,7 +133,7 @@ app.get('/sacarnumero', function (req, res) {
             console.log(carton);
         }
     }
-    if(validarLleno(cartones)>nombres.length){
+    if(Bingo(cartones)>nombres.length){
         res.send("El carton ganador quedo vacante");
     }
     else{
