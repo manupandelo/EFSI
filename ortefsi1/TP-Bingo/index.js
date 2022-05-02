@@ -43,8 +43,9 @@ const CrearCarton=()=>{
     for(let i=0;i<CANT_NUMEROS;i++){
        num=NumRandom(99);
        for(let n=0;n<nums.length;n++){
-           while(num===nums[n]);
-           num=NumRandom(99);
+           while(num===nums[n]){
+               num=NumRandom(99);
+           }
        }
        nums[i]=num;
     }
