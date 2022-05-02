@@ -69,12 +69,12 @@ app.post("/iniciarjuego", function (req, res) {
 	// res.end();
 });
 
-app.get("/obtener_carton/:nombre", function (req, res) {
+app.get("/obtener_carton", function (req, res) {
     if(nombres.length>=cartones.length){
        res.send(`Error, mas jugadores que cartones`);
     }
     else{
-    const nombre=req.params.nombre;
+    const nombre=req.body.nombre;
     nombres.push(nombre);
     console.log(nombres);
     i = nombres.length;
