@@ -15,12 +15,28 @@ El juego comienza llamando al endpoint *iniciar_juego* que crea los cartones.
 Los usuarios piden los cartones con su nombre (con *obtener_carton*).
 Se sacan números con *sacar_numero* hasta que el sistema detecta qué cartón obtuvo el bingo mostrando el nombre del jugador que ganó o diciendo que quedó vacante si el cartón ganador no fué reclamado por un jugador.*/
 
+const en_decena = (num) => num === 100 ? 10 : Math.floor(num/10) + 1;
+
+const decena_completa = (num) => {
+    const decena = en_decena(num);
+
+    if (decenas[decena-1] >= 2) {
+        return true;
+    } else {
+        decenas[decena-1] = decenas[decena-1] + 1;
+        return false;
+    }
+
+}
+
 const express = require("express");
 const app = express();
 const PORT = 3000;
 let nombres=[];
 let cartones=[];
-const CANT_NUMEROS=5;
+let cartonessaved=[];
+let bolillas=[];
+let contadordecenas=[0,0,0,0,0,0,0,0,0,0];
 
 const process_data = () => {
 
@@ -38,20 +54,40 @@ function NumRandom(max){
 }
 
 const CrearCarton=()=>{
-    const nums=[];
-    let num;
-    for(let i=0;i<CANT_NUMEROS;i++){
-       num=NumRandom(99);
-       for(let n=0;n<nums.length;n++){
-           while(num===nums[n]){
-               num=NumRandom(99);
-           }
-       }
-       nums[i]=num;
+    const carton = [];
+
+    let i = 0;
+
+    while (i < 15) {
+        const random = rnd();
+        console.log(random, en_decena(random));
+
+        if(!decena_completa(random)) {
+            carton.push(random);
+            i++;
+
+        } else {
+            console.log(`Decena completa`);
+        }
     }
-    return nums;
+
+    console.log(carton);
+    console.log(decenas);
 }
 
+const en_decena = (num) => num === 100 ? 10 : Math.floor(num/10) + 1;
+
+const decena_completa = (num) => {
+    const decena = en_decena(num);
+
+    if (decenas[decena-1] >= 2) {
+        return true;
+    } else {
+        decenas[decena-1] = decenas[decena-1] + 1;
+        return false;
+    }
+
+}
 
 app.post("/numero_aleatorio", function (req, res) {
 	
@@ -63,8 +99,9 @@ app.post("/numero_aleatorio", function (req, res) {
 app.post("/iniciarjuego", function (req, res) {
 	
     for(let i=0;i<req.body.cartones;i++){
-            let carton=CrearCarton();
+            let carton=CrearCarton(req.body.numeros);
             cartones.push(carton);
+            cartonessaved.push(carton);
         }
         res.send(cartones);
 	// res.end();
@@ -121,8 +158,35 @@ const Bingo = (cartones) => {
 
 
 app.get('/sacarnumero', function (req, res) {
+    if (Bingo(cartones)==-1) {
+        Bolilla = NumRandom(99);
+        bolillas.push(Bolilla);
+        console.log(`Se saco la bolilla: ${Bolilla}`);
+        for (let i= 0; i<cartones.length; i++) {
+            carton=cartones[i]
+            for (let j=0; j < 10; j++) {
+                if (carton[j] === Bolilla) {
+                    console.log(`Carton de ${nombres[i]} tenia el ${Bolilla}`);
+                    carton[j] = -1;
+                }
+            }
+            console.log(carton);
+        }
+    }
+    else{
+        if(Bingo(cartones)>nombres.length){
+        res.send("El carton ganador quedo vacante y su carton tenia los numeros: ${cartonessaved[i]}. Salieron las bolillas: ${bolillas}");
+        }
+        else{
+            res.send(`El carton ganador es el de ${nombres[i]} y su carton tenia los numeros: ${cartonessaved[i]}. Salieron las bolillas: ${bolillas}`);
+        }
+    }
+});
+
+app.get('/numero_continuo', function (req, res) {
     while (Bingo(cartones)==-1) {
         Bolilla = NumRandom(99);
+        bolillas.push(Bolilla);
         console.log(`Se saco la bolilla: ${Bolilla}`);
         for (let i= 0; i<cartones.length; i++) {
             carton=cartones[i]
@@ -136,10 +200,10 @@ app.get('/sacarnumero', function (req, res) {
         }
     }
     if(Bingo(cartones)>nombres.length){
-        res.send("El carton ganador quedo vacante");
+        res.send("El carton ganador quedo vacante y su carton tenia los numeros: ${cartonessaved[i]}. Salieron las bolillas: ${bolillas}");
     }
     else{
-        res.send(`El carton ganador es el de ${nombres[i]}`);
+        res.send(`El carton ganador es el de ${nombres[i]} y su carton tenia los numeros: ${cartonessaved[i]}. Salieron las bolillas: ${bolillas}`);
     }
     
 });
