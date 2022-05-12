@@ -15,20 +15,6 @@ El juego comienza llamando al endpoint *iniciar_juego* que crea los cartones.
 Los usuarios piden los cartones con su nombre (con *obtener_carton*).
 Se sacan números con *sacar_numero* hasta que el sistema detecta qué cartón obtuvo el bingo mostrando el nombre del jugador que ganó o diciendo que quedó vacante si el cartón ganador no fué reclamado por un jugador.*/
 
-const en_decena = (num) => num === 100 ? 10 : Math.floor(num/10) + 1;
-
-const decena_completa = (num) => {
-    const decena = en_decena(num);
-
-    if (decenas[decena-1] >= 2) {
-        return true;
-    } else {
-        decenas[decena-1] = decenas[decena-1] + 1;
-        return false;
-    }
-
-}
-
 const express = require("express");
 const app = express();
 const PORT = 3000;
@@ -36,7 +22,6 @@ let nombres=[];
 let cartones=[];
 let cartonessaved=[];
 let bolillas=[];
-let contadordecenas=[0,0,0,0,0,0,0,0,0,0];
 
 const process_data = () => {
 
@@ -53,40 +38,21 @@ function NumRandom(max){
     return Math.round(Math.random() * max-1) + 1;
 }
 
-const CrearCarton=()=>{
-    const carton = [];
-
-    let i = 0;
-
-    while (i < 15) {
-        const random = rnd();
-        console.log(random, en_decena(random));
-
-        if(!decena_completa(random)) {
-            carton.push(random);
-            i++;
-
-        } else {
-            console.log(`Decena completa`);
+const CrearCarton=(numscarton)=>{
+    const nums=[];
+    let num;
+    for(let i=0;i<numscarton;i++){
+        num=NumRandom(99);
+        for(let n=0;n<nums.length;n++){
+            while(num===nums[n]);
+            num=NumRandom(99);
+            while(num===nums[n]){
+                num=NumRandom(99);
+            }
         }
+        nums[i]=num;
     }
-
-    console.log(carton);
-    console.log(decenas);
-}
-
-const en_decena = (num) => num === 100 ? 10 : Math.floor(num/10) + 1;
-
-const decena_completa = (num) => {
-    const decena = en_decena(num);
-
-    if (decenas[decena-1] >= 2) {
-        return true;
-    } else {
-        decenas[decena-1] = decenas[decena-1] + 1;
-        return false;
-    }
-
+    return nums;
 }
 
 app.post("/numero_aleatorio", function (req, res) {
