@@ -121,23 +121,25 @@ const Bingo = (cartones) => {
     return -1;
 }
 
-
+const Bingo = (bolilla) => {
+    for (let i= 0; i<cartones.length; i++) {
+        carton=cartones[i]
+        for (let j=0; j < 10; j++) {
+            if (carton[j] === Bolilla) {
+                console.log(`Carton de ${nombres[i]} tenia el ${Bolilla}`);
+                carton[j] = -1;
+            }
+        }
+        console.log(carton);
+    }
+}
 
 app.get('/sacarnumero', function (req, res) {
     if (Bingo(cartones)==-1) {
         Bolilla = NumRandom(99);
         bolillas.push(Bolilla);
         console.log(`Se saco la bolilla: ${Bolilla}`);
-        for (let i= 0; i<cartones.length; i++) {
-            carton=cartones[i]
-            for (let j=0; j < 10; j++) {
-                if (carton[j] === Bolilla) {
-                    console.log(`Carton de ${nombres[i]} tenia el ${Bolilla}`);
-                    carton[j] = -1;
-                }
-            }
-            console.log(carton);
-        }
+        VerificarCarton(bolilla);
     }
     else{
         if(Bingo(cartones)>nombres.length){
@@ -154,16 +156,7 @@ app.get('/numero_continuo', function (req, res) {
         Bolilla = NumRandom(99);
         bolillas.push(Bolilla);
         console.log(`Se saco la bolilla: ${Bolilla}`);
-        for (let i= 0; i<cartones.length; i++) {
-            carton=cartones[i]
-            for (let j=0; j < 10; j++) {
-                if (carton[j] === Bolilla) {
-                    console.log(`Carton de ${nombres[i]} tenia el ${Bolilla}`);
-                    carton[j] = -1;
-                }
-            }
-            console.log(carton);
-        }
+        VerificarCarton(Bolilla);
     }
     if(Bingo(cartones)>nombres.length){
         res.send("El carton ganador quedo vacante y su carton tenia los numeros: ${cartonessaved[i]}. Salieron las bolillas: ${bolillas}");
