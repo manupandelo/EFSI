@@ -1,41 +1,33 @@
- import 'bootstrap/dist/css/bootstrap.min.css';
- import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Forms from './Components/Form';
-import { Container } from 'react-bootstrap';
-import './index.css';
-import Cards from './Components/Card';
-
+import React, { useState } from "react";
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from './Components/Form.js';
+import Card from './Components/Card.js';
 
 function App() {
-  return(
-    <div>
-      <header><h1>ADMINISTRADOR DE PACIENTES</h1></header>
-      <main>
-        <div className="row col-12">
-            <div className="col-md-3"></div>
-            <div className="col-md-3">
-            <h1>CREAR MI CITA</h1>
-            <Forms/>
-            </div>
-            <div className="col-md-3">
-              <h1>ADMINISTRA TUS CITAS</h1>
-              <Cards
-            
-              />
-              
+  const [citas, setCitas] = useState([])
 
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>ADMINISTRADOR DE PACIENTES</h1>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6'>
+              <h2>CREAR MI CITA</h2>
+             <Form setCitas={setCitas}></Form>
             </div>
-            <div className="col-md-3"></div>
+            <div className='col-md-6'>
+              <h2>ADMINISTRA TUS CITAS</h2>
+              <div className='justify-content-center d-flex'>
+              <Card citas={citas} setCitas={setCitas}></Card>
+              </div>
+            </div>
           </div>
-      </main>
-      <footer></footer>
-         
+        </div>
+      </header>
     </div>
-  )
+  );
 }
 
 export default App;
-
-
-
-<Forms/>
