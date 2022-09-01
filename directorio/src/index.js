@@ -5,10 +5,10 @@ import {
   Route,
 } from "react-router-dom";
 import Layout from "./Layout"
-import Estadisticas from "./pages/Estadisticas";
-import Home from "./pages/Home"
-import Persona from "./pages/Persona";
-import Contacto from "./pages/Contacto";
+import Estadisticas from "./Screens/Estadisticas";
+import Home from "./Screens/Home"
+import Persona from "./Screens/Persona";
+import Contacto from "./Screens/Contacto";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root")
