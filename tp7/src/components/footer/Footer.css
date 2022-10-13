@@ -2,7 +2,7 @@
     background-color: rgb(41, 41, 41);
     padding: 2.5rem;
     color: white;
-    position: relative;
+    position:fixed;
     bottom: 0;
     width: 100%;
 }

@@ -1,12 +1,13 @@
+import React from "react";
 import Carousel from 'react-bootstrap/Carousel';
 
 const Slider = () => {
-  return (
+    return (
     <Carousel>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../../images/slider.png"
+          src="../images/slider.png"
           alt="First slide"
         />
         <Carousel.Caption>
@@ -17,7 +18,7 @@ const Slider = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../../images/slider.png"
+          src="../images/slider.png"
           alt="Second slide"
         />
 
@@ -29,7 +30,7 @@ const Slider = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="../../images/slider.png"
+          src="../images/slider.png"
           alt="Third slide"
         />
 
@@ -41,7 +42,7 @@ const Slider = () => {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
-  );
+    );
 }
 
 export default Slider; 

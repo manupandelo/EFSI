@@ -1,10 +1,10 @@
-import Products from "../components/Products/Products.js";
-import Slider from "../components/Slider.js";
+import React from "react";
+import Slider from "../components/Slider";
+
 const Home = () => {
     return (
         <Slider></Slider>
-        <Products></Products>
-    )
+    );
 }
 
 export default Home;
