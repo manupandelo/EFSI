@@ -1,5 +1,5 @@
 import React from "react";
-import ComponentProduct from "../../views/Products";
+import Card from "../Card";
 import { useEffect } from "react";
 
 
@@ -7,7 +7,7 @@ const Product = (param) => {
     const [products, setProducts] = React.useState([]);
 
     useEffect(() => {
-        fetch(`https://dummyjson.com/products/${param}`)
+        fetch(`https://dummyjson.com/products/${param.id}`)
         .then(res => res.json())
         .then(res => setProducts(res.products))
         .catch(err => console.error(err));
@@ -15,8 +15,7 @@ const Product = (param) => {
 
     return (
         <div className="content-body">
-            { products.map(product => <ComponentProduct key={product.id} product={product} />) }
-            { products.map(product => <ComponentProduct key={product.id} product={product} />) }
+            { products.map(product => <Card key={product.id} product={product} />) }
         </div>
     );
 }

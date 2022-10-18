@@ -1,13 +1,13 @@
 import React from "react";
 import { Outlet } from 'react-router-dom';
-import Nav from './nav/Nav';
 import Footer from './footer/Footer';
+import Header from "./Nav";
 
 const Layout = () => {
 
     return (
         <React.Fragment>
-            <Nav />
+            <Header />
             <Outlet className="content-body" />
             <Footer />
         </React.Fragment>

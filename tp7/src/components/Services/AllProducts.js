@@ -1,6 +1,6 @@
 import React from "react";
-import Product from "../../views/Products";
 import { useEffect } from "react";
+import Cards from "../Card";
 
 const Products = () => {
     const [products, setProducts] = React.useState([]);
@@ -14,8 +14,7 @@ const Products = () => {
 
     return (
         <div className="content-body">
-            { products.map(product => <Product key={product.id} product={product} />) }
-            { products.map(product => <Product key={product.id} product={product} />) }
+            { products.map(product => <Cards key={product.id} product={product} />) }
         </div>
     );
 }

@@ -1,0 +1,19 @@
+.borde{
+    border-radius: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+    border: 2px solid rgb(156, 182, 190);
+    cursor: pointer;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    background-color:  rgb(156, 182, 190);
+}
+
+.imagen{
+    margin: 0.5rem;
+    width: auto;
+    border-radius: 0;
+    border: 1px solid rgb(159, 159, 159);
+}

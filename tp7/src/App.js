@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
-import Products from './views/Products.js';
-import Product from './components/Calls/Product.js';
+import Products from './components/Services/AllProducts.js';
+import Product from './components/Services/SpecificProduct.js';
 import Home from './views/Home';
 
 
