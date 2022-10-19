@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import Cards from "../Card";
+import { Container, Row, Col } from 'react-bootstrap';
+import '../../index.css';
 
 const Products = () => {
     const [products, setProducts] = React.useState([]);
@@ -13,9 +15,13 @@ const Products = () => {
     }, []);
 
     return (
-        <div className="content-body">
-            { products.map(product => <Cards key={product.id} product={product} />) }
-        </div>
+        <Container>
+                <br></br>
+                   <h5 className="texto">Nuestros Productos</h5>
+                <Row md={3}>
+                    { products.map(product => <Cards key={product.id} product={product} />) }
+                </Row>
+        </Container>
     );
 }
 
