@@ -3,11 +3,10 @@ import { useEffect } from "react";
 import Cards from "../Card";
 import { Container, Row, Col } from 'react-bootstrap';
 import '../../index.css';
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Inicio = () => {
     const [products, setProducts] = React.useState([]);
-    const navigate = useNavigate()
     
     useEffect(() => {
         fetch(`https://dummyjson.com/products?limit=6`)
@@ -20,8 +19,11 @@ const Inicio = () => {
         <Container>
                 <br></br>
                    <h5 className="texto">Productos destacados</h5>
-                <Row md={3}>
-                    { products.map(product => <Cards key={product.id} product={product} onClick={() => navigate(`/products/${product.id}`)}  />) }
+                <Row>
+                    { products.map(product => 
+                    
+                        <Cards key={product.id} product={product}  />
+                    )}
                 </Row>
         </Container>
     );

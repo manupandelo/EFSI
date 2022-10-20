@@ -18,7 +18,7 @@ const Products = () => {
         <Container>
                 <br></br>
                    <h5 className="texto">Nuestros Productos</h5>
-                <Row md={3}>
+                <Row>
                     { products.map(product => <Cards key={product.id} product={product} />) }
                 </Row>
         </Container>

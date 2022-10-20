@@ -8,19 +8,19 @@ import '../index.css'
 
 const Footer = () => {
     return (
-        <footer id="footer" class="navbar bg-dark">
-        <div class="container">
+        <footer id="footer" className="navbar bg-dark">
+        <div className="container">
                 <div >
                   <Image src={logo_byn} class="imgfooter"/>
                 </div>
                 <div id="centrofooter">
-                  <Image src={ubicacion} width="25" class="foot"/>
+                  <Image src={ubicacion} width="25" className="foot"/>
                         Beiro 3300 - Villa del Parque
                   <br></br>
-                    <Image src={mail}  width="25" class="foot"/>
+                    <Image src={mail}  width="25" className="foot"/>
                         contacto@sanitarioscampana.com.ar
                   </div>
-                <div class="celular">
+                <div className="celular">
                         <Image src={tel} width="30"/>
                        4503-6015
                    

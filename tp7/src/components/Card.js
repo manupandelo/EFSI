@@ -3,10 +3,13 @@ import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Card.css';
+import { useNavigate } from "react-router-dom"
 
 const Cards = (props) => {
+  const navigate = useNavigate()
     return (
       <Col md={4}>
+        <div onClick={() => navigate(`/products/${props.product.id}`)}>
           <Card className='card borde' style={{ width: '18rem' }}>
             <Card.Img variant="top" className='imagen' src={props.product.thumbnail} />
             <Card.Body>
@@ -16,6 +19,7 @@ const Cards = (props) => {
               </Card.Text>
             </Card.Body>
           </Card>
+          </div>
       </Col>
     );
 }

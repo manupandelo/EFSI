@@ -3,21 +3,18 @@ import Card from "../Card";
 import { useEffect } from "react";
 
 
-const Product = (param) => {
-    const [products, setProducts] = React.useState([]);
+const SpecificProduct = (id) => {
+    const [product, setProduct] = React.useState([]);
 
     useEffect(() => {
-        fetch(`https://dummyjson.com/products/${param.id}`)
+        fetch(`https://dummyjson.com/products/${id}`)
         .then(res => res.json())
-        .then(res => setProducts(res.products))
+        .then(res => setProduct(res))
         .catch(err => console.error(err));
     }, []);
+    console.log(product)
 
-    return (
-        <div className="content-body">
-            { products.map(product => <Card key={product.id} product={product} />) }
-        </div>
-    );
+    return product;
 }
 
-export default Product;
+export default SpecificProduct;
