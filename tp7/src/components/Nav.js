@@ -13,9 +13,9 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
             <Nav.Link href="/">INICIO</Nav.Link>
-            <Nav.Link href="/">QUIENES SOMOS</Nav.Link>
+            <Nav.Link href="/nosotros">QUIENES SOMOS</Nav.Link>
             <Nav.Link href="/products">PRODUCTOS</Nav.Link>
-            <Nav.Link href="/">CONTACTO</Nav.Link>
+            <Nav.Link href="/contact">CONTACTO</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
