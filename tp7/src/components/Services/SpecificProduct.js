@@ -2,7 +2,6 @@ import React from "react";
 import Card from "../Card";
 import { useEffect } from "react";
 
-
 const SpecificProduct = (id) => {
     const [product, setProduct] = React.useState([]);
 
@@ -12,9 +11,9 @@ const SpecificProduct = (id) => {
         .then(res => setProduct(res))
         .catch(err => console.error(err));
     }, []);
-    console.log(product)
 
     return product;
 }
+
 
 export default SpecificProduct;

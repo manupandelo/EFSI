@@ -19,7 +19,7 @@ const Products = () => {
                 <br></br>
                    <h5 className="texto">Nuestros Productos</h5>
                 <Row>
-                    { products.map(product => <Cards key={product.id} product={product} />) }
+                    { products.map(product => <Cards key={product.id} props={product} />) }
                 </Row>
         </Container>
     );

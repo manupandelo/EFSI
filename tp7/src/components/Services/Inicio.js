@@ -22,7 +22,7 @@ const Inicio = () => {
                 <Row>
                     { products.map(product => 
                     
-                        <Cards key={product.id} product={product}  />
+                        <Cards key={product.id} props={product}  />
                     )}
                 </Row>
         </Container>
